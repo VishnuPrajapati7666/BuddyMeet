@@ -1,0 +1,127 @@
+.meetVideoContainer {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Local video small preview */
+.meetUserVideo {
+    position: absolute;
+    bottom: 15%;
+    right: 2%;
+    height: 20vh;
+    width: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    z-index: 5;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.meetUserVideo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0,0,0,0.8);
+}
+/* Remote videos layout */
+.conferenceView { 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    padding: 15px;
+    position: absolute;
+    top: 5%;
+    z-index: 1;
+    transition: filter 0.3s ease;
+}
+.chatRoom {
+    position: absolute;
+    height: 90vh;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    width: 30vw;
+    padding-inline: 20px;
+}
+
+.chatContainer {
+    position: relative;
+    height: 100%;
+}
+
+
+.chattingArea {
+    position: absolute;
+    bottom: 0;
+}
+/* Control buttons container */
+.buttonContainers {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 10;
+}
+
+.buttonContainers svg {
+    font-size: 2.8rem;
+    color: #ffffff;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.buttonContainers svg:hover {
+    color: #1de9b6;
+    transform: scale(1.2);
+}
+
+
+
+/* Blur effect when a video is focused */
+.conferenceView.blur {
+    filter: blur(5px);
+    pointer-events: none;
+}
+
+/* Remote video boxes */
+.conferenceView video {
+    width: 38vw;
+    height: 25vh;
+    min-width: 28vw;
+    max-width: 45vw;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.conferenceView video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+}
+
+/* Focused video overlay */
+.focusedVideo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80vw;
+    height: 60vh;
+    max-width: 90vw;
+    max-height: 80vh;
+    border-radius: 15px;
+    z-index: 999;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
