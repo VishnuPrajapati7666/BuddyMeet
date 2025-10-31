@@ -1,127 +1,326 @@
+/* ==================================== */
+/* 🎨 CSS Variables for Theming/Spacing */
+/* ==================================== */
+:root {
+  /* Colors */
+  --color-primary: #1a73e8; /* Google Blue/Action */
+  --color-primary-dark: #155fc4;
+  --color-secondary: #1de9b6; /* Accent/Hover */
+  --color-background-dark: #0d1a38; /* Darker than the gradient start */
+  --color-text-light: #ffffff;
+  --color-text-dark: #333333;
+  --color-chat-background: #f7f7f7;
+  --color-border: #dddddd;
+
+  /* Spacing */
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+
+/* 🌈 Overall Meeting Container */
 .meetVideoContainer {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: hidden;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  /* Richer, more professional gradient */
+  background: linear-gradient(135deg, var(--color-background-dark) 0%, #3a4b7c 50%, #1a2a6c 100%);
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  color: var(--color-text-light); /* Default text color for the container */
 }
 
-/* Local video small preview */
-.meetUserVideo {
-    position: absolute;
-    bottom: 15%;
-    right: 2%;
-    height: 20vh;
-    width: auto;
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-    z-index: 5;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* 🎥 Conference Area (Left Side) */
+.conferenceView {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--spacing-md); /* Consistent gap using variable */
+  padding: var(--spacing-md) var(--spacing-lg);
+  overflow-y: auto;
+  transition: filter 0.3s ease;
 }
 
-.meetUserVideo:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0,0,0,0.8);
-}
-/* Remote videos layout */
-.conferenceView { 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    width: 100%;
-    padding: 15px;
-    position: absolute;
-    top: 5%;
-    z-index: 1;
-    transition: filter 0.3s ease;
-}
-.chatRoom {
-    position: absolute;
-    height: 90vh;
-    right: 0;
-    background: white;
-    border-radius: 10px;
-    width: 30vw;
-    padding-inline: 20px;
-}
-
-.chatContainer {
-    position: relative;
-    height: 100%;
-}
-
-
-.chattingArea {
-    position: absolute;
-    bottom: 0;
-}
-/* Control buttons container */
-.buttonContainers {
-    position: absolute;
-    bottom: 2%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 20px;
-    z-index: 10;
-}
-
-.buttonContainers svg {
-    font-size: 2.8rem;
-    color: #ffffff;
-    transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.buttonContainers svg:hover {
-    color: #1de9b6;
-    transform: scale(1.2);
-}
-
-
-
-/* Blur effect when a video is focused */
-.conferenceView.blur {
-    filter: blur(5px);
-    pointer-events: none;
-}
-
-/* Remote video boxes */
+/* 🎥 Individual Remote Videos */
 .conferenceView video {
-    width: 38vw;
-    height: 25vh;
-    min-width: 28vw;
-    max-width: 45vw;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+  /* Use max-width/flex-grow for more adaptable sizing */
+  flex-grow: 1;
+  width: 30%;
+  max-width: 320px; /* Capping max size for better grid layout */
+  min-width: 260px;
+  height: 25vh;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 3px solid transparent; /* Prepare for focus state */
+  box-shadow: var(--shadow-md);
+  background: #000;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
 }
 
 .conferenceView video:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  transform: translateY(-5px) scale(1.02); /* Subtle lift */
+  box-shadow: var(--shadow-lg);
 }
 
-/* Focused video overlay */
+/* Accessibility: Added focus state */
+.conferenceView video:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 4px var(--color-secondary), var(--shadow-lg); /* Outer glow */
+}
+
+/* 📹 Local User Video Preview */
+.meetUserVideo {
+  position: absolute;
+  bottom: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 180px;
+  height: 120px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  object-fit: cover;
+  z-index: 5;
+  cursor: pointer;
+  border: 2px solid var(--color-text-light); /* White border for emphasis */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.meetUserVideo:hover,
+.meetUserVideo:focus {
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4); /* Lighter shadow since it's on a dark BG */
+  outline: none;
+}
+
+/* 💬 Chat Room (Right Side) */
+.chatRoom {
+  position: relative;
+  height: 100vh;
+  width: 25vw;
+  max-width: 360px; /* Set a max-width for large screens */
+  min-width: 280px; /* Set a min-width to prevent squishing */
+  background: var(--color-chat-background);
+  border-radius: 15px 0 0 15px;
+  padding: var(--spacing-md);
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.35); /* Stronger shadow */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--color-text-dark);
+}
+
+/* Chat Container Scroll */
+.chatContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+  /* Add a subtle scrollbar style (browser-dependent) */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+}
+
+/* Chatting Area Input */
+.chattingArea {
+  display: flex;
+  gap: 10px;
+  margin-top: var(--spacing-md);
+}
+
+.chattingArea input {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chattingArea input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.3); /* Subtle blue glow */
+}
+
+.chattingArea button {
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  border: none;
+  border-radius: 8px;
+  padding: var(--spacing-sm) 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+
+.chattingArea button:hover {
+  background: var(--color-primary-dark);
+}
+
+.chattingArea button:active {
+  transform: scale(0.98);
+}
+
+/* Accessibility: Added focus state */
+.chattingArea button:focus {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+/* 🎛️ Control Buttons (Bottom Center) */
+.buttonContainers {
+  position: absolute;
+  bottom: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Use a semi-transparent dark background for better contrast */
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  border-radius: 50px;
+  backdrop-filter: blur(5px);
+  display: flex;
+  gap: 25px;
+  z-index: 10;
+  box-shadow: var(--shadow-md);
+}
+
+.buttonContainers svg {
+  font-size: 2.2rem; /* Slightly smaller for better fit */
+  color: var(--color-text-light);
+  cursor: pointer;
+  /* Added box-shadow for a "glowing" effect on hover */
+  transition: color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.buttonContainers svg:hover {
+  color: var(--color-secondary);
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px var(--color-secondary));
+}
+
+/* Accessibility: Added focus state */
+.buttonContainers svg:focus {
+  outline: 2px solid var(--color-secondary);
+  border-radius: 50%; /* Make focus ring circular */
+  outline-offset: 2px;
+}
+
+/* 🔍 Focused Video */
 .focusedVideo {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 80vw;
-    height: 60vh;
-    max-width: 90vw;
-    max-height: 80vh;
-    border-radius: 15px;
-    z-index: 999;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-    transition: all 0.3s ease;
-    cursor: pointer;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 80vw;
+  max-width: 1200px; /* Ensure it doesn't get too large on massive screens */
+  height: 65vh;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  z-index: 999;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.9); /* Very strong shadow */
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect transition */
+  background: #000;
+  object-fit: contain; /* IMPORTANT: Use contain so the full video is visible */
 }
 
+/* Blur background when focused */
+.conferenceView.blur {
+  filter: blur(8px); /* Stronger blur */
+  pointer-events: none;
+  user-select: none; /* Prevent accidental selection */
+}
+
+/* ==================================== */
+/* 📱 Responsive Layout */
+/* ==================================== */
+
+@media (max-width: 1200px) {
+  .chatRoom {
+    width: 30vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  .chatRoom {
+    /* Allow chat room to shrink more */
+    width: 35vw;
+    min-width: 260px;
+  }
+
+  .conferenceView video {
+    width: 45%;
+    max-width: none;
+    height: 20vh; /* Reduced height to fit more videos */
+  }
+}
+
+@media (max-width: 768px) {
+  .meetVideoContainer {
+    flex-direction: column;
+  }
+
+  .conferenceView {
+    order: 1;
+    padding: var(--spacing-md) var(--spacing-sm);
+    /* Make video area more compact vertically for small screens */
+    height: 60vh;
+  }
+
+  .chatRoom {
+    position: relative;
+    width: 100%;
+    height: 40vh; /* Take up the lower 40% of the screen */
+    min-height: 250px; /* Ensure chat is usable */
+    max-width: none;
+    border-radius: 15px 15px 0 0;
+    order: 2;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15); /* Shadow on top edge */
+  }
+  
+  /* Force single-column view for videos on mobile */
+  .conferenceView {
+      justify-content: flex-start;
+  }
+
+  .conferenceView video {
+    width: 90%;
+    min-width: unset;
+    height: 20vh;
+  }
+
+  .meetUserVideo {
+    width: 120px;
+    height: 80px;
+    bottom: calc(40vh + 15px); /* Position above the chat room */
+    right: 15px;
+    z-index: 10;
+  }
+
+  .buttonContainers {
+      bottom: calc(40vh + 15px); /* Position buttons above the chat room */
+      padding: 8px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+    .chattingArea {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .chattingArea button {
+        padding: 0.8rem 1.2rem;
+    }
+    .buttonContainers svg {
+        font-size: 1.8rem;
+        gap: 15px;
+    }
+}
